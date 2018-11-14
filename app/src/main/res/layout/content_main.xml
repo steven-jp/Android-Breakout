@@ -9,14 +9,11 @@
     tools:showIn="@layout/activity_main">
 
 
-
-
-
     <fragment
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:id="@+id/gameinterface"
         android:name="edu.wwu.csci412.a4.GameInterface"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
         />
 
 

@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
 //        GameController gc = new GameController();
 //        GameStatus gs = new GameStatus();
-//        GameInterface gi = new GameInterface();
+        GameInterface gi = new GameInterface();
     }
 
 
