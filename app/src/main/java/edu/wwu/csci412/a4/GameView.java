@@ -11,14 +11,34 @@ public class GameView extends View {
     private int height;
     private int width;
     private Game game;
+    public int GAME_SPEED = 100;
 
+    public float batStartX;
+    public float batStartY;
+    public float batStopX;
+    public float batStopY;
+
+    @Override
+    public boolean performClick() {
+        super.performClick();
+        return true;
+    }
 
     public GameView(Context context, int width, int height) {
         super(context);
         this.width = width;
         this.height = height;
         game = new Game();
+        batStartX = this.width/3;
+        batStartY = this.height-(this.height/8);
+        batStopX = this.width-(this.width/3);
+        batStopY = this.height-(this.height/8);
+
+        game.setBat(batStartX,batStartY,batStopX,batStopY);
+        game.setBall();
+
     }
+
     @Override
     public void onDraw(Canvas canvas){
         super.onDraw(canvas);
@@ -28,7 +48,7 @@ public class GameView extends View {
         paint.setAntiAlias(true);
         paint.setColor(Color.WHITE);
         paint.setStrokeWidth(30);
-        canvas.drawLine(width/3,height-(height/8),width-(width/3),height-(height/8),paint);
+        canvas.drawLine(batStartX,batStartY,batStopX,batStopY,paint);
 //        Toast.makeText(getContext(),
 //                "This is a message displayed in a Toast",
 //                Toast.LENGTH_SHORT).show();
@@ -36,6 +56,8 @@ public class GameView extends View {
        // canvas.drawCircle();
     }
 
+
+    /* maybe throw in array with its index so when removed we can refer to it that way */
     public void drawBricks(Canvas canvas, int brickCount) {
         /* brick dimensions */
         int brickHeight = 80;
@@ -83,6 +105,10 @@ public class GameView extends View {
                 break;
         }
         return paint;
+    }
+
+    public Game getGame(){
+        return this.game;
     }
 
 }
