@@ -1,14 +1,23 @@
 package edu.wwu.csci412.a4;
 
+import android.graphics.Point;
+
 public class Game {
     public float batStartX;
     public float batStartY;
     public float batStopX;
     public float batStopY;
     private boolean ballStarted;
+    public Point ballCenter;
+    public float ballRadius;
+    private int ballSpeed;
+    private float ballAngle;
 
-    public Game() {
+
+    public Game(int ballSpeed) {
         ballStarted = false;
+        this.ballSpeed = ballSpeed;
+        ballAngle = (float) ((Math.random() * 5 + 1) * (Math.PI/6));
     }
 
     public boolean isBallStarted(){
@@ -21,6 +30,8 @@ public class Game {
 
     public void moveBall() {
         ballStarted = true;
+        ballCenter.x += ballSpeed * Math.cos(ballAngle);
+        ballCenter.y -= ballSpeed * Math.sin(ballAngle);
     }
 
 
@@ -33,10 +44,6 @@ public class Game {
         this.batStartY = starty;
         this.batStopX = stopx;
         this.batStopY = stopy;
-    }
-    // set ball in center
-    public void setBall() {
-
     }
 
     /* maybe half circle and whatever range it intersects it goes to opposite */

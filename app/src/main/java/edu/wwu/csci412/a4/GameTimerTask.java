@@ -4,19 +4,21 @@ import java.util.TimerTask;
 
 public class GameTimerTask extends TimerTask {
      private GameView gv;
-     private Game game;
+     private Game game = null;
 
     public GameTimerTask(GameView gv){
         this.gv = gv;
-        gv.getGame();
+        game = gv.getGame();
 
     }
     @Override
     public void run(){
-       // game.moveBall();
-//        if (game.ballOffScreen() || game.ballHitBrick() || game.ballHitBat()) {
-//            game.newBallDirection();
-//        }
+        if (game != null) {
+            game.moveBall();
+        if (game.ballOffScreen() || game.ballHitBrick() || game.ballHitBat()) {
+            game.newBallDirection();
+        }
+        }
         gv.postInvalidate();
     }
 

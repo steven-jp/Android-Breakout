@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.view.View;
 import android.widget.Toast;
 
@@ -28,15 +29,15 @@ public class GameView extends View {
         super(context);
         this.width = width;
         this.height = height;
-        game = new Game();
+        game = new Game(20);
         batStartX = this.width/3;
         batStartY = this.height-(this.height/8);
         batStopX = this.width-(this.width/3);
         batStopY = this.height-(this.height/8);
 
         game.setBat(batStartX,batStartY,batStopX,batStopY);
-        game.setBall();
-
+        game.ballCenter = new Point((width/2),(int)(batStartY - 100));
+        game.ballRadius = 30;
     }
 
     @Override
@@ -49,11 +50,7 @@ public class GameView extends View {
         paint.setColor(Color.WHITE);
         paint.setStrokeWidth(30);
         canvas.drawLine(batStartX,batStartY,batStopX,batStopY,paint);
-//        Toast.makeText(getContext(),
-//                "This is a message displayed in a Toast",
-//                Toast.LENGTH_SHORT).show();
-       // canvas.drawLine();
-       // canvas.drawCircle();
+        canvas.drawCircle(game.ballCenter.x, game.ballCenter.y,game.ballRadius,paint);
     }
 
 
