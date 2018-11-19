@@ -15,10 +15,11 @@ public class GameTimerTask extends TimerTask {
     public void run(){
         if (game != null) {
             game.moveBall();
-        if (game.ballOffScreen() || game.ballHitBrick() || game.ballHitBat()) {
+        }
+        if (game.ballHitWall() || game.ballHitBrick() || game.ballHitBat()) {
             game.newBallDirection();
         }
-        }
+
         gv.postInvalidate();
     }
 

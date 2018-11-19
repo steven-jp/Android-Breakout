@@ -5,6 +5,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.graphics.Rect;
+import android.support.constraint.solver.widgets.Rectangle;
 import android.view.View;
 import android.widget.Toast;
 
@@ -29,59 +31,71 @@ public class GameView extends View {
         super(context);
         this.width = width;
         this.height = height;
-        game = new Game(20);
+        game = new Game(60, this.width, this.height);
         batStartX = this.width/3;
         batStartY = this.height-(this.height/8);
         batStopX = this.width-(this.width/3);
         batStopY = this.height-(this.height/8);
-
+        game.bricks = 30;
         game.setBat(batStartX,batStartY,batStopX,batStopY);
         game.ballCenter = new Point((width/2),(int)(batStartY - 100));
         game.ballRadius = 30;
+        game.batWidth = 30;
+        setUpBricks(game.bricks);
     }
 
     @Override
     public void onDraw(Canvas canvas){
         super.onDraw(canvas);
         canvas.drawColor(Color.BLACK);
-        drawBricks(canvas, 30);
+        drawBricks(canvas);
         Paint paint = new Paint();
         paint.setAntiAlias(true);
         paint.setColor(Color.WHITE);
-        paint.setStrokeWidth(30);
+        paint.setStrokeWidth(game.batWidth);
         canvas.drawLine(batStartX,batStartY,batStopX,batStopY,paint);
+        paint.setStrokeWidth(game.ballRadius);
         canvas.drawCircle(game.ballCenter.x, game.ballCenter.y,game.ballRadius,paint);
     }
 
 
-    /* maybe throw in array with its index so when removed we can refer to it that way */
-    public void drawBricks(Canvas canvas, int brickCount) {
+    /* need to increase brick size because ball doesn't detect a hit sometimes */
+    public void setUpBricks(int brickCount) {
         /* brick dimensions */
         int brickHeight = 80;
         int brickWidth = 200;
         /* where we can start placing the bricks */
-        int bricksWidthStart = 40;
-        int bricksWidthEnd = width-40;
-        /* how far down we can go */
+        int bricksWidthStart = 80;
         int bricksHeightStart = 100;
-        int bricksHeightEnd = height-300;
-        /* number of bricks we can fit in each row and column */
-        int maxPerRow = (bricksWidthEnd-bricksWidthStart) / brickWidth;
-        int maxPerCol = height/brickHeight;
+
+        /* number of bricks we can fit in each column */
+        int maxPerCol = 5;
+
+        /* spaces each brick width and height by its size */
+        int row = 0, col = 0;
 
         /* draw the bricks */
-        int row, col;
-        row = 0;
-        for (int i = 0; i < brickCount; i+=maxPerRow) {
+        game.allBricks = new Rect[brickCount/maxPerCol][maxPerCol];
+        for (int i = 0; i < brickCount/maxPerCol; i++) {
             col = 0;
-            for (int j = 0; j < maxPerRow; j++){
-                canvas.drawRect(bricksWidthStart+col,bricksHeightStart+row,brickWidth+col,brickHeight+row,brickColor());
+            for (int j = 0; j < maxPerCol; j++){
+                game.allBricks[i][j] = new Rect(bricksWidthStart+col,bricksHeightStart+row,brickWidth+col,brickHeight+row);
                 col += brickWidth;
             }
             row += brickHeight;
         }
+    }
 
-
+    /* maybe throw in array with its index so when removed we can refer to it that way */
+    public void drawBricks(Canvas canvas) {
+        for (int i = 0; i < game.allBricks.length; i++) {
+            for (int j = 0; j < game.allBricks[i].length; j++) {
+                /* hasn't already been hit */
+                if (game.allBricks[i][j] != null) {
+                    canvas.drawRect(game.allBricks[i][j], brickColor());
+                }
+            }
+        }
     }
 
 
