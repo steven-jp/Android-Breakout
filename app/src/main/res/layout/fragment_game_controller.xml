@@ -3,8 +3,71 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     tools:context=".GameController">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/gamecontroller"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorGrey"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
+            <Button
+                android:id="@+id/playbutton"
+                android:text="Play"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#00ff00"
+                android:textColor="#fff"
+                android:textSize="20dp" />
+            <Button
+                android:id="@+id/pausebutton"
+                android:text="Pause"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#0000ff"
+                android:textColor="#fff"
+                android:textSize="20dp" />
+            <Button
+                android:id="@+id/stopbutton"
+                android:text="Stop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#ff0000"
+                android:textColor="#fff"
+                android:textSize="20dp" />
+        </android.support.v7.widget.Toolbar>
+
+        <!--<Item-->
+            <!--android:id="@+id/playbutton"-->
+            <!--android:orderInCategory="80"-->
+            <!--android:title="Play"-->
+            <!--android:icon="@drawable/playbutton"-->
+            <!--app:showAsAction="always" />-->
+
+        <!--<Item-->
+            <!--android:id="@+id/pausebutton"-->
+            <!--android:orderInCategory="81"-->
+            <!--android:icon="@drawable/pausebutton"-->
+            <!--android:title="Pause"-->
+            <!--app:showAsAction="always" />-->
+        <!--<Item-->
+            <!--android:id="@+id/stopbutton"-->
+            <!--android:orderInCategory="82"-->
+            <!--android:icon="@drawable/stopbutton"-->
+            <!--android:title="Stop"-->
+            <!--app:showAsAction="always" />-->
+
+
+    </android.support.design.widget.AppBarLayout>
+
 
 
 </FrameLayout>

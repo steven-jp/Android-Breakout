@@ -17,13 +17,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
 
 
-//        GameController gc = new GameController();
-//        GameStatus gs = new GameStatus();
-        GameInterface gi = new GameInterface();
+        GameController gc = new GameController();
+        GameStatus gs = new GameStatus();
+
+        FragmentManager fm = getSupportFragmentManager();       // added this
+        if (gc.readyToPlay && fm.findFragmentById(R.id.gameinterface) != null) {
+            FragmentTransaction ft = fm.beginTransaction();
+            GameInterface gi = new GameInterface();
+            ft.add(R.id.gameinterface, gi);
+            ft.commit();
+        }
     }
 
 
