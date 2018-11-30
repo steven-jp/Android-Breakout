@@ -125,6 +125,7 @@ public class Game {
                         ballCenter.x+ballRadius,ballCenter.y+ballRadius)) {
                     //Log.w("yaaaaa","in rect");
                     allBricks[i][j] = null;
+                    bricksLeft--;
                     return true;
                 }
             }

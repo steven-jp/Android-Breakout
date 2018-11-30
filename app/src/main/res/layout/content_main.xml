@@ -7,18 +7,38 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".MainActivity"
     tools:showIn="@layout/activity_main">
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
     <fragment
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
         android:id="@+id/gamecontroller"
         android:name="edu.wwu.csci412.a4.GameController"
-        />
+        android:layout_width="0dp"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintLeft_toRightOf="@id/guideline"
+        app:layout_constraintRight_toRightOf="parent"/>
+
     <fragment
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id="@+id/gamestatus"
+        android:name="edu.wwu.csci412.a4.GameStatus"
+        android:layout_width="0dp"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintRight_toLeftOf="@id/guideline"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+    <fragment
         android:id="@+id/gameinterface"
         android:name="edu.wwu.csci412.a4.GameInterface"
-        />
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gamecontroller" />
 
 
 </android.support.constraint.ConstraintLayout>

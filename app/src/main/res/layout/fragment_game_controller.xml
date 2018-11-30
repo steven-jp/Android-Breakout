@@ -22,27 +22,27 @@
             <Button
                 android:id="@+id/playbutton"
                 android:text="Play"
-                android:layout_width="wrap_content"
+                android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:background="#00ff00"
                 android:textColor="#fff"
-                android:textSize="20dp" />
+                android:textSize="15dp" />
             <Button
                 android:id="@+id/pausebutton"
                 android:text="Pause"
-                android:layout_width="wrap_content"
+                android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:background="#0000ff"
                 android:textColor="#fff"
-                android:textSize="20dp" />
+                android:textSize="15dp" />
             <Button
                 android:id="@+id/stopbutton"
                 android:text="Stop"
-                android:layout_width="wrap_content"
+                android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:background="#ff0000"
                 android:textColor="#fff"
-                android:textSize="20dp" />
+                android:textSize="15dp" />
         </android.support.v7.widget.Toolbar>
 
         <!--<Item-->

@@ -41,21 +41,11 @@ public class GameInterface extends Fragment {
     }
     public void updateBat(MotionEvent event){
         float x = event.getX();
-
         /* update view and game coords of bat */
         gv.batStopX = (gv.batStopX-gv.batStartX) + x;
         gv.batStartX = x;
         game.batStopX =  gv.batStopX;
         game.batStartX = gv.batStartX;
-
-
-
-//        Toast.makeText(getContext(),
-//                gv.batStopX + " " + gv.batStartX + "\n" + game.batStopX + " " + game.batStartX,
-//                Toast.LENGTH_SHORT).show();
-
-
-
     }
 
 
@@ -104,6 +94,12 @@ public class GameInterface extends Fragment {
 
     }
 */
+
+
+    public Game getGame(){
+        return this.game;
+    }
+
     private class TouchHandler extends GestureDetector.SimpleOnGestureListener {
      public TouchHandler() {
 
