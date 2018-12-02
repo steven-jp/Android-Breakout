@@ -15,6 +15,7 @@ public class GameTimerTask extends TimerTask {
     public void run(){
         if (game != null) {
             game.moveBall();
+            game.updateBat();
         }
         if (game.ballHitWall() || game.ballHitBrick() || game.ballHitBat()) {
             game.newBallDirection();

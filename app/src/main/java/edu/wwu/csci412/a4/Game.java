@@ -1,17 +1,22 @@
 package edu.wwu.csci412.a4;
 
+import android.content.Context;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.media.SoundPool;
 import android.util.Log;
 import android.widget.Toast;
 
 import static java.security.AccessController.getContext;
 
 public class Game {
-    public float batStartX;
-    public float batStartY;
-    public float batStopX;
-    public float batStopY;
+    /* bat location */
+    public int batStartX;
+    public int batStartY;
+    public int batStopX;
+    public int batStopY;
+    public Rect batRect;
+    /* ball location and interactions */
     private boolean ballStarted;
     public Point ballCenter;
     public int ballRadius;
@@ -19,16 +24,24 @@ public class Game {
     private int ballSpeed;
     private float ballAngle;
     private String direction;
+    /* screen */
     private int screenHeight;
     private int screenWidth;
+    /* bricks */
     public int bricks;
     public int bricksLeft;
     public Rect[][] allBricks;
+    /* Play/pause/Stop */
     public String playerStatus;
+    /* sounds */
+    private SoundPool pool;
+    private int brickSound;
+    private int batSound;
+    private Context context;
 
 
 
-    public Game(int ballSpeed, int screenWidth, int screenHeight, int bricks) {
+    public Game(Context context, int ballSpeed, int screenWidth, int screenHeight, int bricks) {
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
         ballStarted = false;
@@ -38,6 +51,14 @@ public class Game {
         playerStatus = "playing";
         this.bricks = bricks;
         bricksLeft = bricks;
+        this.context = context;
+        /* sound setup */
+        SoundPool.Builder pb = new SoundPool.Builder();
+        pb.setMaxStreams(2);
+        pool = pb.build();
+        brickSound = pool.load(context,R.raw.brick,1);
+        batSound = pool.load(context,R.raw.bat,1);
+
     }
 
     public boolean isBallStarted(){
@@ -72,11 +93,18 @@ public class Game {
     public void setBallSpeed() {
 
     }
-    public void setBat(float startx, float starty, float stopx, float stopy) {
+    public void updateBat(){
+        batRect.left = batStartX;
+        batRect.right = batStopX;
+        batRect.top = batStartY;
+        batRect.bottom = batStopY;
+    }
+    public void setBat(int startx, int starty, int stopx, int stopy) {
         this.batStartX = startx;
         this.batStartY = starty;
         this.batStopX = stopx;
         this.batStopY = stopy;
+        batRect = new Rect(batStartX,batStartY,batStopX,batStopY);
     }
 
     /* maybe half circle and whatever range it intersects it goes to opposite */
@@ -128,6 +156,7 @@ public class Game {
                         ballCenter.x+ballRadius,ballCenter.y+ballRadius)) {
                     allBricks[i][j] = null;
                     bricksLeft--;
+                    pool.play(brickSound,1.0f,1.0f,1,0,1);
                     return true;
                 }
             }
@@ -135,7 +164,13 @@ public class Game {
         return false;
     }
     public boolean ballHitBat() {
-    // play sound
+        Rect rect = new Rect(batStartX,batStartY,batStopX,batStopY);
+        if (rect.intersects(ballCenter.x-ballRadius,ballCenter.y-ballRadius,
+                ballCenter.x+ballRadius,ballCenter.y+ballRadius)){
+            pool.play(batSound,1.0f,1.0f,1,0,1);
+            return true;
+        }
+
         return false;
     }
     public boolean ballHitWall(){

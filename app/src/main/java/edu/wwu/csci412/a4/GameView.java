@@ -16,10 +16,10 @@ public class GameView extends View {
     private Game game;
     public int GAME_SPEED = 100;
 
-    public float batStartX;
-    public float batStartY;
-    public float batStopX;
-    public float batStopY;
+    public int batStartX;
+    public int batStartY;
+    public int batStopX;
+    public int batStopY;
 
     @Override
     public boolean performClick() {
@@ -31,11 +31,11 @@ public class GameView extends View {
         super(context);
         this.width = width;
         this.height = height;
-        game = new Game(60, this.width, this.height, 30);
+        game = new Game(context,60, this.width, this.height, 30);
         batStartX = this.width/3;
         batStartY = this.height-(this.height/8);
         batStopX = this.width-(this.width/3);
-        batStopY = this.height-(this.height/8);
+        batStopY = this.height-(this.height/8)+30;
         game.setBat(batStartX,batStartY,batStopX,batStopY);
         game.ballCenter = new Point((width/2),(int)(batStartY - 100));
         game.ballRadius = 30;
@@ -51,8 +51,9 @@ public class GameView extends View {
         Paint paint = new Paint();
         paint.setAntiAlias(true);
         paint.setColor(Color.WHITE);
-        paint.setStrokeWidth(game.batWidth);
-        canvas.drawLine(batStartX,batStartY,batStopX,batStopY,paint);
+      //  paint.setStrokeWidth(game.batWidth);
+        //canvas.drawLine(batStartX,batStartY,batStopX,batStopY,paint);
+        canvas.drawRect(game.batRect,paint);
         paint.setStrokeWidth(game.ballRadius);
         canvas.drawCircle(game.ballCenter.x, game.ballCenter.y,game.ballRadius,paint);
     }
@@ -61,15 +62,15 @@ public class GameView extends View {
     /* need to increase brick size because ball doesn't detect a hit sometimes */
     public void setUpBricks(int brickCount) {
         /* brick dimensions */
-        int brickHeight = 80;
+        int brickHeight = 120;
         int brickWidth = 200;
         /* where we can start placing the bricks */
-        int bricksWidthStart = 80;
+        int bricksWidthStart = 200;
         int bricksHeightStart = 100;
 
         /* number of bricks we can fit in each column */
         int maxPerCol = 5;
-
+        int spaceBetween = 10;
         /* spaces each brick width and height by its size */
         int row = 0, col = 0;
 
@@ -78,10 +79,10 @@ public class GameView extends View {
         for (int i = 0; i < brickCount/maxPerCol; i++) {
             col = 0;
             for (int j = 0; j < maxPerCol; j++){
-                game.allBricks[i][j] = new Rect(bricksWidthStart+col,bricksHeightStart+row,brickWidth+col,brickHeight+row);
-                col += brickWidth;
+                game.allBricks[i][j] = new Rect(bricksWidthStart+col,bricksHeightStart+row,bricksWidthStart+brickWidth+col,bricksHeightStart+brickHeight+row);
+                col += brickWidth+spaceBetween;
             }
-            row += brickHeight;
+            row += brickHeight+spaceBetween;
         }
     }
 

@@ -42,8 +42,8 @@ public class GameInterface extends Fragment {
     public void updateBat(MotionEvent event){
         float x = event.getX();
         /* update view and game coords of bat */
-        gv.batStopX = (gv.batStopX-gv.batStartX) + x;
-        gv.batStartX = x;
+        gv.batStopX = (gv.batStopX-gv.batStartX) + (int)x;
+        gv.batStartX = (int)x;
         game.batStopX =  gv.batStopX;
         game.batStartX = gv.batStartX;
     }
