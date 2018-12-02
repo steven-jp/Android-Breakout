@@ -19,6 +19,7 @@ public class Brick extends View {
         super.onDraw(canvas);
         Paint paint = new Paint();
         paint.setAntiAlias(true);
+        /* randomize brick colors */
         int randNum = (int)(Math.random() * 3 + 1);
         switch(randNum) {
             case  1:
@@ -32,11 +33,7 @@ public class Brick extends View {
                 break;
         }
         canvas.drawRect(100,100,100,100, paint);
-
-
-
     }
-
 
 
 }

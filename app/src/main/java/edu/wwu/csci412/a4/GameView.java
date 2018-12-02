@@ -15,7 +15,7 @@ public class GameView extends View {
     private int width;
     private Game game;
     public int GAME_SPEED = 100;
-
+    /* location of bat */
     public int batStartX;
     public int batStartY;
     public int batStopX;
@@ -31,37 +31,36 @@ public class GameView extends View {
         super(context);
         this.width = width;
         this.height = height;
-        game = new Game(context,60, this.width, this.height, 30);
+        game = new Game(context,90, this.width, this.height, 30, 3);
+        /* setup and location of bat */
         batStartX = this.width/3;
         batStartY = this.height-(this.height/8);
         batStopX = this.width-(this.width/3);
         batStopY = this.height-(this.height/8)+30;
         game.setBat(batStartX,batStartY,batStopX,batStopY);
+        /* setup and location of ball */
         game.ballCenter = new Point((width/2),(int)(batStartY - 100));
         game.ballStart = new Point((width/2),(int)(batStartY - 100));
         game.ballRadius = 30;
         game.batWidth = 30;
-        game.chances = 3;
+        /* create bricks */
         setUpBricks(game.bricks);
     }
 
     @Override
     public void onDraw(Canvas canvas){
         super.onDraw(canvas);
+        /* drawing of brick, bat, and ball */
         canvas.drawColor(Color.BLACK);
         drawBricks(canvas);
         Paint paint = new Paint();
         paint.setAntiAlias(true);
         paint.setColor(Color.WHITE);
-      //  paint.setStrokeWidth(game.batWidth);
-        //canvas.drawLine(batStartX,batStartY,batStopX,batStopY,paint);
         canvas.drawRect(game.batRect,paint);
         paint.setStrokeWidth(game.ballRadius);
         canvas.drawCircle(game.ballCenter.x, game.ballCenter.y,game.ballRadius,paint);
     }
 
-
-    /* need to increase brick size because ball doesn't detect a hit sometimes */
     public void setUpBricks(int brickCount) {
         /* brick dimensions */
         int brickHeight = 120;
@@ -69,7 +68,6 @@ public class GameView extends View {
         /* where we can start placing the bricks */
         int bricksWidthStart = 200;
         int bricksHeightStart = 100;
-
         /* number of bricks we can fit in each column */
         int maxPerCol = 5;
         int spaceBetween = 10;
@@ -88,8 +86,8 @@ public class GameView extends View {
         }
     }
 
-    /* maybe throw in array with its index so when removed we can refer to it that way */
     public void drawBricks(Canvas canvas) {
+        /* draw/keep original positions of bricks on screen */
         for (int i = 0; i < game.allBricks.length; i++) {
             for (int j = 0; j < game.allBricks[i].length; j++) {
                 /* hasn't already been hit */
@@ -101,11 +99,10 @@ public class GameView extends View {
     }
 
 
-
+    /* randomize brick colors */
     private Paint brickColor() {
         Paint paint = new Paint();
         paint.setAntiAlias(true);
-
         switch((int)(Math.random() * 3 + 1)) {
             case  1:
                 paint.setColor(Color.RED);

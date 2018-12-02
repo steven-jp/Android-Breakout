@@ -13,24 +13,22 @@ public class GameTimerTask extends TimerTask {
     }
     @Override
     public void run(){
-        if (game != null) {
-            game.moveBall();
-            game.updateBat();
+        if (!game.pause) {
+            if (game != null) {
+                game.moveBall();
+                game.updateBat();
+            }
+            if (game.ballHitWall() || game.ballHitBrick() || game.ballHitBat()) {
+                game.newBallDirection();
+            }
+            if (game.playerWon()) {
+                game.playerStatus = "Player won";
+            }
+            if (game.playerLost()) {
+                game.playerStatus = "Player Lost";
+            }
+            gv.postInvalidate();
         }
-        if (game.ballHitWall() || game.ballHitBrick() || game.ballHitBat()) {
-            game.newBallDirection();
-        }
-        if (game.playerWon()){
-            game.playerStatus = "Player won";
-        }
-        if (game.playerLost()){
-            game.playerStatus = "Player Lost";
-        }
-
-
-        gv.postInvalidate();
     }
-
-
 
 }

@@ -14,15 +14,15 @@ import android.widget.Button;
 
 
 public class GameController extends Fragment {
-    public static Boolean playGame = true;
+    public static Boolean playGame = false;
+    public static Boolean pause = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        /* Inflate the layout for this fragment */
         View v = inflater.inflate(R.layout.fragment_game_controller, container, false);
         Toolbar toolbar = (Toolbar) v.findViewById(R.id.gamecontroller);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-
 
         /* Buttons for displaying Game Interface */
         Button play =  v.findViewById(R.id.playbutton);
@@ -45,14 +45,20 @@ public class GameController extends Fragment {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.playbutton:
+                    /* to start fragment */
                     playGame = true;
-                    // bring up frag dynamically
                     break;
                 case R.id.pausebutton:
-                    // pause frag somehow ?
+                    /* to pause fragment */
+                    if (pause && playGame){
+                        pause = false;
+                    }
+                    else if (!pause && playGame) {
+                        pause = true;
+                    }
                     break;
                 case R.id.stopbutton:
-                    // remove frag dynamically
+                    /* to remove fragment */
                     playGame = false;
                     break;
             }

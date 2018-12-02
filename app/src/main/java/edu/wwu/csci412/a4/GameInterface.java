@@ -21,9 +21,7 @@ import java.util.Timer;
 public class GameInterface extends Fragment {
     private GameView gv;
     private Game game;
-
-
-    // private GestureDetector gestures;
+    private Timer gt;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -64,37 +62,21 @@ public class GameInterface extends Fragment {
         getActivity().getWindowManager().getDefaultDisplay( ).getSize( size );
         gv = new GameView(getActivity(), size.x, size.y - statusBarHeight );
 
-
         /* timer setup */
-        Timer gt = new Timer();
+        gt = new Timer();
         gt.schedule(new GameTimerTask(gv),0,gv.GAME_SPEED);
 
         /* game and touch setup */
         game = gv.getGame();
-        //TouchHandler th = new TouchHandler();
-
-        //gestures = new GestureDetector(this, th);
-        //gestures.setBat
 
     }
-
-    public void addBricks() {
-
-    }
-    public void addBall() {
-
-    }
-    public void addBat() {
-
-    }
-
-    /*
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-
+    public void onDestroy(){
+        super.onDestroy();
+        /* remove timer tasks when fragment is destroyed */
+        gt.cancel();
+        gt.purge();
     }
-*/
-
 
     public Game getGame(){
         return this.game;

@@ -35,6 +35,7 @@ public class Game {
     public Rect[][] allBricks;
     /* Play/pause/Stop */
     public String playerStatus;
+    public boolean pause;
     /* sounds */
     private SoundPool pool;
     private int brickSound;
@@ -43,17 +44,18 @@ public class Game {
 
 
 
-    public Game(Context context, int ballSpeed, int screenWidth, int screenHeight, int bricks) {
+    public Game(Context context, int ballSpeed, int screenWidth, int screenHeight, int bricks, int chances) {
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
         ballStarted = false;
         this.ballSpeed = ballSpeed;
         ballAngle = (float) ((Math.random() * 3 + 1) * (Math.PI/6));
         direction = "PosNeg";
-        playerStatus = "playing";
+        this.chances = chances;
+        playerStatus = Integer.toString(chances) + " Chances";
         this.bricks = bricks;
-        bricksLeft = bricks;
         this.context = context;
+        this.pause = false;
         /* sound setup */
         SoundPool.Builder pb = new SoundPool.Builder();
         pb.setMaxStreams(2);
@@ -90,11 +92,6 @@ public class Game {
         }
     }
 
-
-
-    public void setBallSpeed() {
-
-    }
     public void updateBat(){
         batRect.left = batStartX;
         batRect.right = batStopX;
@@ -151,13 +148,14 @@ public class Game {
 
     }
     public boolean ballHitBrick() {
-    //play sound
         for (int i = 0; i < allBricks.length; i++) {
             for (int j = 0; j < allBricks[i].length; j++) {
+                /* ball hit a brick */
                 if (allBricks[i][j] != null && allBricks[i][j].intersects(ballCenter.x-ballRadius,ballCenter.y-ballRadius,
                         ballCenter.x+ballRadius,ballCenter.y+ballRadius)) {
+                    /* remove brick, update score, and play sound */
                     allBricks[i][j] = null;
-                    bricksLeft--;
+                    bricksLeft++;
                     pool.play(brickSound,1.0f,1.0f,1,0,1);
                     return true;
                 }
@@ -167,6 +165,7 @@ public class Game {
     }
     public boolean ballHitBat() {
         Rect rect = new Rect(batStartX,batStartY,batStopX,batStopY);
+        /* ball hit bat */
         if (rect.intersects(ballCenter.x-ballRadius,ballCenter.y-ballRadius,
                 ballCenter.x+ballRadius,ballCenter.y+ballRadius)){
             pool.play(batSound,1.0f,1.0f,1,0,1);
@@ -176,6 +175,7 @@ public class Game {
         return false;
     }
     public boolean ballHitWall(){
+        /* ball hit walls of screen */
         if (ballCenter.x+ballRadius >= screenWidth || ballCenter.x+ballRadius <= 0 || ballCenter.y+ballRadius <= 0) {
             return true;
         }
@@ -185,8 +185,10 @@ public class Game {
         if (chances == 0){
             return true;
         }
+        /* ball went past board */
         if (ballCenter.y >= screenHeight) {
             chances--;
+            playerStatus = Integer.toString(chances) + " Chances";
             ballCenter.x = ballStart.x;
             ballCenter.y = ballStart.y;
             direction = "PosNeg";
@@ -194,7 +196,7 @@ public class Game {
         return false;
     }
     public boolean playerWon(){
-        if (bricksLeft == 0){
+        if (bricksLeft == bricks){
             return true;
         }
         return false;

@@ -45,27 +45,6 @@
                 android:textSize="15dp" />
         </android.support.v7.widget.Toolbar>
 
-        <!--<Item-->
-            <!--android:id="@+id/playbutton"-->
-            <!--android:orderInCategory="80"-->
-            <!--android:title="Play"-->
-            <!--android:icon="@drawable/playbutton"-->
-            <!--app:showAsAction="always" />-->
-
-        <!--<Item-->
-            <!--android:id="@+id/pausebutton"-->
-            <!--android:orderInCategory="81"-->
-            <!--android:icon="@drawable/pausebutton"-->
-            <!--android:title="Pause"-->
-            <!--app:showAsAction="always" />-->
-        <!--<Item-->
-            <!--android:id="@+id/stopbutton"-->
-            <!--android:orderInCategory="82"-->
-            <!--android:icon="@drawable/stopbutton"-->
-            <!--android:title="Stop"-->
-            <!--app:showAsAction="always" />-->
-
-
     </android.support.design.widget.AppBarLayout>
 
 

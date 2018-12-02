@@ -6,13 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     tools:context=".GameStatus">
-    <!--<fragment-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:background="@color/colorGrey"-->
-        <!--android:layout_height="?attr/actionBarSize"-->
-        <!--android:id="@+id/gamestatus"-->
-        <!--android:name="edu.wwu.csci412.a4.GameStatus"-->
-        <!--/>-->
+
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

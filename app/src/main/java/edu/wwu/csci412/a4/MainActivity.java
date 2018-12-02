@@ -27,15 +27,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-
-
         gc = new GameController();
         gs = new GameStatus();
 
-
-
+        /* pass information and update fragments */
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
@@ -45,19 +40,16 @@ public class MainActivity extends AppCompatActivity {
                     public void run() {
                         FragmentManager fm = getSupportFragmentManager();
                         FragmentTransaction ft = fm.beginTransaction();
-                        Log.w("ahhhh","here");
-
+                        /* player hit play button */
                         if (gc.playGame){
-                            Log.w("ahhhh",gc.playGame + "");
                             if (fm.findFragmentById(R.id.gameinterface) == null) {
-                                Log.w("ahhhh","here2");
                                 gi = new GameInterface();
                                 ft.add(R.id.gameinterface, gi);
                                 ft.commit();
                             }
                             play();
                         }
-
+                        /* player hit stop button or hasn't started game */
                         else {
                             if (fm.findFragmentById(R.id.gameinterface) != null) {
                                 ft.remove(fm.findFragmentById(R.id.gameinterface)).commit();
@@ -84,30 +76,35 @@ public class MainActivity extends AppCompatActivity {
         TextView Score = statusView.findViewById(R.id.currentscorevalue);
         TextView PlayerStatus = statusView.findViewById(R.id.playerstatusvalue);
 
-        /* player has hit play button */
-      //  if (controllerFrag.playGame) {
-
-
-
         /* update score and player status */
         if (interfaceFrag != null) {
-            if (interfaceFrag.getGame() != null) {
-                Score.setText(Integer.toString(interfaceFrag.getGame().bricksLeft));
+            /* set score */
+            Score.setText(Integer.toString(interfaceFrag.getGame().bricksLeft));
+            /* pause game */
+            if (gc.pause){
+                gi.getGame().pause = true;
             }
-
-            if (interfaceFrag.getGame().playerWon()) {
-                PlayerStatus.setText("Player Won");
-            } else {
-                if (interfaceFrag.getGame().playerLost()) {
-                    PlayerStatus.setText("Player Lost");
-                    // remove fragment
-                } else {
-                    PlayerStatus.setText("Playing");
+            /* unpause game */
+            else {
+                gi.getGame().pause = false;
+                /* player won */
+                if (interfaceFrag.getGame().playerWon()) {
+                    PlayerStatus.setText("Player Won");
+                }
+                /* player lost or currently playing*/
+                else {
+                    if (interfaceFrag.getGame().playerLost()) {
+                        PlayerStatus.setText("Player Lost");
+                        if (interfaceFrag != null) {
+                            FragmentTransaction ft = fm.beginTransaction();
+                            ft.remove(interfaceFrag).commit();
+                            gc.playGame = false;
+                        }
+                    } else {
+                        PlayerStatus.setText(gi.getGame().playerStatus);
+                    }
                 }
             }
         }
-}
-
-
-
+    }
 }
