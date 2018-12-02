@@ -31,12 +31,11 @@ public class GameView extends View {
         super(context);
         this.width = width;
         this.height = height;
-        game = new Game(60, this.width, this.height);
+        game = new Game(60, this.width, this.height, 30);
         batStartX = this.width/3;
         batStartY = this.height-(this.height/8);
         batStopX = this.width-(this.width/3);
         batStopY = this.height-(this.height/8);
-        game.bricks = 30;
         game.setBat(batStartX,batStartY,batStopX,batStopY);
         game.ballCenter = new Point((width/2),(int)(batStartY - 100));
         game.ballRadius = 30;

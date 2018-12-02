@@ -31,9 +31,9 @@
         app:layout_constraintRight_toLeftOf="@id/guideline"
         app:layout_constraintLeft_toLeftOf="parent"/>
 
-    <fragment
+    <LinearLayout
         android:id="@+id/gameinterface"
-        android:name="edu.wwu.csci412.a4.GameInterface"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginBottom="0dp"

@@ -24,16 +24,19 @@ public class Game {
     public int bricks;
     public int bricksLeft;
     public Rect[][] allBricks;
+    public String playerStatus;
 
 
 
-    public Game(int ballSpeed, int screenWidth, int screenHeight) {
+    public Game(int ballSpeed, int screenWidth, int screenHeight, int bricks) {
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
         ballStarted = false;
         this.ballSpeed = ballSpeed;
         ballAngle = (float) ((Math.random() * 3 + 1) * (Math.PI/6));
         direction = "PosNeg";
+        playerStatus = "playing";
+        this.bricks = bricks;
         bricksLeft = bricks;
     }
 
@@ -123,7 +126,6 @@ public class Game {
             for (int j = 0; j < allBricks[i].length; j++) {
                 if (allBricks[i][j] != null && allBricks[i][j].intersects(ballCenter.x-ballRadius,ballCenter.y-ballRadius,
                         ballCenter.x+ballRadius,ballCenter.y+ballRadius)) {
-                    //Log.w("yaaaaa","in rect");
                     allBricks[i][j] = null;
                     bricksLeft--;
                     return true;
@@ -149,6 +151,9 @@ public class Game {
         return false;
     }
     public boolean playerWon(){
+        if (bricksLeft == 0){
+            return true;
+        }
         return false;
     }
 

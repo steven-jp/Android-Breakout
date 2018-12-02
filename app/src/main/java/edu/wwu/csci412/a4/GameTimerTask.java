@@ -19,6 +19,13 @@ public class GameTimerTask extends TimerTask {
         if (game.ballHitWall() || game.ballHitBrick() || game.ballHitBat()) {
             game.newBallDirection();
         }
+        if (game.playerWon()){
+            game.playerStatus = "Player won";
+        }
+        if (game.playerLost()){
+            game.playerStatus = "Player Lost";
+        }
+
 
         gv.postInvalidate();
     }

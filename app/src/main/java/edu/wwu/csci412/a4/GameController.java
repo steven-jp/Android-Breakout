@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,7 @@ import android.widget.Button;
 
 
 public class GameController extends Fragment {
-    public Boolean readyToPlay = false;
+    public static Boolean playGame = true;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -23,11 +24,13 @@ public class GameController extends Fragment {
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
 
-        /* onclicklisteners */
+        /* Buttons for displaying Game Interface */
         Button play =  v.findViewById(R.id.playbutton);
         Button pause = v.findViewById(R.id.pausebutton);
         Button stop = v.findViewById(R.id.stopbutton);
         play.setOnClickListener(listener);
+        pause.setOnClickListener(listener);
+        stop.setOnClickListener(listener);
 
         return v;
     }
@@ -38,10 +41,11 @@ public class GameController extends Fragment {
     }
 
     private View.OnClickListener listener = new View.OnClickListener() {
+        @Override
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.playbutton:
-                    readyToPlay = true;
+                    playGame = true;
                     // bring up frag dynamically
                     break;
                 case R.id.pausebutton:
@@ -49,6 +53,7 @@ public class GameController extends Fragment {
                     break;
                 case R.id.stopbutton:
                     // remove frag dynamically
+                    playGame = false;
                     break;
             }
         }

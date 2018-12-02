@@ -99,11 +99,4 @@ public class GameInterface extends Fragment {
     public Game getGame(){
         return this.game;
     }
-
-    private class TouchHandler extends GestureDetector.SimpleOnGestureListener {
-     public TouchHandler() {
-
-     }
-
-    }
 }
