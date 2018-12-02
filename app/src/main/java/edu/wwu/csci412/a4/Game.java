@@ -19,11 +19,13 @@ public class Game {
     /* ball location and interactions */
     private boolean ballStarted;
     public Point ballCenter;
+    public Point ballStart;
     public int ballRadius;
     public int batWidth;
     private int ballSpeed;
     private float ballAngle;
     private String direction;
+    public int chances;
     /* screen */
     private int screenHeight;
     private int screenWidth;
@@ -180,8 +182,14 @@ public class Game {
         return false;
     }
     public boolean playerLost(){
-        if (ballCenter.y >= screenHeight) {
+        if (chances == 0){
             return true;
+        }
+        if (ballCenter.y >= screenHeight) {
+            chances--;
+            ballCenter.x = ballStart.x;
+            ballCenter.y = ballStart.y;
+            direction = "PosNeg";
         }
         return false;
     }

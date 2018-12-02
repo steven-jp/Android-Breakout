@@ -38,8 +38,10 @@ public class GameView extends View {
         batStopY = this.height-(this.height/8)+30;
         game.setBat(batStartX,batStartY,batStopX,batStopY);
         game.ballCenter = new Point((width/2),(int)(batStartY - 100));
+        game.ballStart = new Point((width/2),(int)(batStartY - 100));
         game.ballRadius = 30;
         game.batWidth = 30;
+        game.chances = 3;
         setUpBricks(game.bricks);
     }
 
